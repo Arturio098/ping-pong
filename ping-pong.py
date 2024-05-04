@@ -27,35 +27,25 @@ class Game_Sprite(sprite.Sprite):
         window.blit(self.image , (self.rect.x, self.rect.y))
 
 class Pplayer(Game_Sprite):
-    def update(self):
+    def update_l(self):
         key_pressed = key.get_pressed()
-        if key_pressed[ K_a ] and self.rect.x > 5:
-            self.rect.x  -= self.speed
-        if key_pressed[ K_d ] and self.rect.x < 730:
-            self.rect.x  += self.speed
-    def fiire(self):
-        bullet = Bullet('zhurnal.jpg', self.rect.centerx, self.rect.top, 30, 20, -15)
-        bullets.add(bullet)
+        if key_pressed[ K_w ] and self.rect.y > 5:
+            self.rect.y  -= self.speed
+        if key_pressed[ K_s ] and self.rect.y < 350:
+            self.rect.y  += self.speed
+    def update_r(self):
+        key_pressed = key.get_pressed()
+        if key_pressed[ K_UP ] and self.rect.y > 5:
+            self.rect.y  -= self.speed
+        if key_pressed[ K_DOWN ] and self.rect.y < 350:
+            self.rect.y  += self.speed
+
 
 scorp = 0
 lost = 0
 
-class Enemy(Game_Sprite):
-    def update(self):
-        self.rect.y += self.speed
-        global lost
-        if self.rect.y > 500:
-            self.rect.x = randint(80,720)
-            self.rect.y = 0
-            lost += 1
-
-class Port_Enemy(Game_Sprite):
-    def update(self):
-        self.rect.y += self.speed
-        global lost
-        if self.rect.y > 500:
-            self.rect.x = randint(80,720)
-            self.rect.y = 0
+r_raketa = Pplayer('raketa.png',750, 50, 50, 80, 10)
+l_raketa = Pplayer('raketa.png',0, 50, 50, 80, 10)
 
 
 font.init()
@@ -80,7 +70,11 @@ while game:
 
         window.blit(win_picture,(0,0))
 
-
+        r_raketa.update_r()
+        l_raketa.update_l()
+        
+        r_raketa.reset()
+        l_raketa.reset()
 
     display.update()
     clock.tick(60)
