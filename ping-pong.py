@@ -3,7 +3,8 @@ from random import randint
 from time import time as tm 
 #создай окно игры
 
-# number = input('Какая сложность')
+name_1= input('ВВедите имя 1 игрока(справа)')
+name_2= input('ВВедите имя 2 игрока(слева)')
 
 window = display.set_mode((800,400))
 display.set_caption('ping pong ')
@@ -53,7 +54,8 @@ font.init()
 font = font.Font(None, 70)
 
 win = font.render( ' YOU SAVE THE PEINCESS ' , True , (255,0,0))
-not_win = font.render( ' YOU DIE ' , True , (255,0,0))
+not_win1 = font.render( name_1 +' проиграл' , True , (255,0,0))
+not_win2 = font.render( name_2 +' проиграл' , True , (255,0,0))
 
 speed_x = 3
 speed_y = 3
@@ -88,6 +90,17 @@ while game:
             
         if sprite.collide_rect(l_raketa, ball) or sprite.collide_rect(r_raketa, ball):
             speed_x *= -1
+        
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(not_win2, (200, 200))
+        if ball.rect.x > 800:
+            finish = True
+            window.blit(not_win1, (200, 200))
+
+    display.update()
+    clock.tick(60)
+
 
     display.update()
     clock.tick(60)
