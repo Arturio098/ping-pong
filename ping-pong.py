@@ -46,6 +46,7 @@ lost = 0
 
 r_raketa = Pplayer('raketa.png',750, 50, 50, 80, 10)
 l_raketa = Pplayer('raketa.png',0, 50, 50, 80, 10)
+ball = Game_Sprite('ball.jpg',350, 150, 50, 50, 10)
 
 
 font.init()
@@ -54,6 +55,8 @@ font = font.Font(None, 70)
 win = font.render( ' YOU SAVE THE PEINCESS ' , True , (255,0,0))
 not_win = font.render( ' YOU DIE ' , True , (255,0,0))
 
+speed_x = 3
+speed_y = 3
 
 game = True
 finish = False
@@ -72,9 +75,19 @@ while game:
 
         r_raketa.update_r()
         l_raketa.update_l()
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
         
         r_raketa.reset()
         l_raketa.reset()
+        ball.reset()
+
+        
+        if ball.rect.y > 350 or ball.rect.y < 0:
+            speed_y *= -1
+            
+        if sprite.collide_rect(l_raketa, ball) or sprite.collide_rect(r_raketa, ball):
+            speed_x *= -1
 
     display.update()
     clock.tick(60)
